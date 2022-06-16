@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#helloWorld").click(function(){
+    $("#setup").html("Hello <b>world!</b>");
+  });
+});
+
+var boton = document.getElementById('json_post');
+boton.addEventListener('click', function() {
+  loading.style.display = 'block';
+  axios.get('http://localhost:3000/api/joke', {
+    responseType: 'json'
+  })
+    .then(function(res) {
+      if(res.status==200) {
+        console.log(res.data);
+        mensaje.innerHTML = res.data.title;
+      }
+      console.log(res);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+    .then(function() {
+      loading.style.display = 'none';
+    });
+});
+</script>
+</head>
+<body>
+<button id="json_get">Request JSON GET</button>
+<button id="helloWorld">Change content of all p elements</button>
+
+<p id="setup">This is the setup.</p>
+<p id="punchline">This is the punchline.</p>
+
+</body>
+</html>
